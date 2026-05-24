@@ -1,15 +1,8 @@
 name: Events Demo 1
+
 on:
-  pull_request:
-    types:
-      - opened
-  workflow_dispatch:
   push:
-    branches: #A push made to only the given branches will trigger the workflow#
-      - main
-      - "dev-*"
-    paths-ignore: #Will not trigger workflow if changes are made to a particular file
-      - ".github/workflows/*"
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,16 +10,21 @@ jobs:
     steps:
       - name: Output event data
         run: echo "${{ toJSON(github.event) }}"
+
       - name: Get code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
       - name: Install dependencies
         run: npm ci
+
       - name: Test code
         run: npm run test
+
       - name: Build code
         run: npm run build
-      - name: upload artifacts
-        uses: actions/upload-artifact@v3
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: dist-files
           path: |
