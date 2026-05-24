@@ -39,13 +39,27 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test code
+        run: npm run test
+
+      - name: Build website
+        run: npm run build
+
       - name: Get Build Artifacts
         uses: actions/download-artifact@v4
         with:
           name: dist-files
       - name: Output contents
         run: ls
+
       - name: Output filename
         run: echo "${{ needs.build.outputs.script-file }}" #The needs context object is used to access the output of other jobs
+
       - name: Deploy project
         run: echo "Deploying..."
