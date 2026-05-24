@@ -5,7 +5,7 @@ on:
       - opened
   workflow_dispatch:
   push:
-    branches: #A push made to only the given branches will trigger the workflow
+    branches: #A push made to only the given branches will trigger the workflow#
       - main
       - "dev-*"
     paths-ignore: #Will not trigger workflow if changes are made to a particular file
